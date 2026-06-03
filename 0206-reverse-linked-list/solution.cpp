@@ -8,33 +8,19 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* prev = NULL;
-        ListNode* agla = NULL;
-        
-        while(head != NULL){
-            agla = head->next;
-            head->next = prev;
-            prev = head;
-            head = agla;
+        if(head==NULL || head->next==NULL){
+            return head;
         }
-        return prev;
+
+        ListNode* newHead = reverseList(head->next);//recursion chalegi
+
+        ListNode* front = head->next;
+        front->next=head;//direction ulti hogyi isse
+        head->next=nullptr;//and last wala null ki taraf point now
+        return newHead;
+
     }
 };
-
-// ListNode* reverseList(ListNode* head) {
-//     ListNode* prev = nullptr;
-//     ListNode* next = nullptr;
-
-//     while (head != nullptr) {
-//         next = head->next; // Store next node
-//         head->next = prev; // Reverse current node's pointer
-//         prev = head;       // Move pointers one position ahead
-//         head = next;
-//     }
-//     return prev;
-// }
-
