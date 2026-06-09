@@ -1,24 +1,30 @@
 class Solution {
 public:
-    vector<string> result;
-
-    void generate(string current,int open,int close,int n){
-        if (current.length()==2*n){
-            result.push_back(current);
+    void generate(string s,vector<string>& valid,int open, int close){
+        if(open==0 && close==0){
+            valid.push_back(s);
             return;
         }
 
-        if(open<n){
-            generate(current+"(", open+1, close,n);
+        if(open>0){
+            s.push_back('(');
+            generate(s,valid,open-1,close);
+            s.pop_back();
         }
-        if(close<open){
-            generate(current +")", open, close+1,n);
+        if(close>0){
+            if(open<close){
+                s.push_back(')');
+                generate(s,valid,open,close-1);
+                s.pop_back();
+            }
         }
-
     }
 
     vector<string> generateParenthesis(int n) {
-        generate("",0,0,n);
-        return result;
+        vector<string> valid;
+        int open=n,close=n;
+        string s="";
+        generate(s,valid,open,close);
+        return valid;
     }
 };
