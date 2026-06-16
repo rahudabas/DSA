@@ -11,16 +11,15 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        if(head==NULL || head->next==NULL){
-            return head;
+        if(head==NULL || head->next==NULL)return head;
+        ListNode* temp=head, *prev=NULL, *forw=head->next;
+
+        while(temp!=NULL){
+            temp->next=prev;
+            prev=temp;
+            temp=forw;
+            if(temp!=NULL)forw=forw->next;
         }
-
-        ListNode* newHead = reverseList(head->next);//recursion chalegi
-
-        ListNode* front = head->next;
-        front->next=head;//direction ulti hogyi isse
-        head->next=nullptr;//and last wala null ki taraf point now
-        return newHead;
-
+        return prev;
     }
 };
