@@ -1,16 +1,11 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        int copu = nums[0];
-        for(int i=1;i<nums.size();i+=2){
-            if(nums[i]==copu){
-                copu=nums[i+1];
-            }
-            else{
-                break;
-            }
+        int xr=0;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            xr=xr^nums[i];
         }
-        return copu;
+        return xr;
     }
 };
