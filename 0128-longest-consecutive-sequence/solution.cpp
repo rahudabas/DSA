@@ -1,25 +1,22 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-    int numsSize=nums.size();
-    if(numsSize==0) return 0;
-    int longest =1;
-    unordered_set<int> st;
-    for(int i=0;i<numsSize;i++){
-        st.insert(nums[i]);
-    }
-
-    for(auto it:st){
-        if(st.find(it-1)==st.end()){
-            int cnt =1;
-            int x=it;
-            while(st.find(x+1)!=st.end()){
-                x+=1;
-                cnt+=1;
-            }
-            longest=max(longest,cnt);
+        unordered_set<int> st;
+        for(auto it:nums){
+            st.insert(it);
         }
-    }
-    return longest;
+        int maxi=0;
+        for(auto it:st){
+            if(st.find(it-1)==st.end()){ // agr uska chota consecutive nhi h
+                int curr=it;
+                int cnt=1;
+                while(st.find(curr+1)!=st.end()){
+                        cnt++;
+                        curr++;
+                }
+                maxi=max(maxi,cnt);
+            }
+        }
+        return maxi;
     }
 };
