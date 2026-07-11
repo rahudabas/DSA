@@ -1,53 +1,28 @@
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
-        int m=matrix.size();
-        int n=matrix[0].size();
+        vector<int> row;
+        vector<int> col;
 
-        bool firstrowzero=false;
-        bool firstcolzero=false;
-
-        for(int i=0;i<m;i++){
-            if(matrix[i][0]==0){
-                firstcolzero=true;
-                break;
-            }
-        }
-        for(int j=0;j<n;j++){
-            if(matrix[0][j]==0){
-                firstrowzero=true;
-                break;
-            }
-        }
-
-        for(int i=1;i<m;i++){
-            for(int j=1;j<n;j++){
+        for(int i=0;i<matrix.size();i++){
+            for(int j=0;j<matrix[0].size();j++){
                 if(matrix[i][j]==0){
-                    matrix[i][0]=0;
-                    matrix[0][j]=0;
+                    row.push_back(i);
+                    col.push_back(j);
                 }
             }
         }
 
-        for(int i=1;i<m;i++){
-            for(int j=1;j<n;j++){
-                if(matrix[i][0]==0 || matrix[0][j]==0){
-                    matrix[i][j]=0;
-                }
+        for(auto it:row){
+            for(int i=0;i<matrix[0].size();i++){
+                matrix[it][i]=0;
             }
         }
 
-        if(firstcolzero){
-            for(int i=0;i<m;i++){
-                matrix[i][0]=0;
+        for(auto it:col){
+            for(int i=0;i<matrix.size();i++){
+                matrix[i][it]=0;
             }
         }
-        if(firstrowzero){
-            for(int j=0;j<n;j++){
-                matrix[0][j]=0;
-            }
-        }
-
-
     }
 };
