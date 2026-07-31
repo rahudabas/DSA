@@ -1,43 +1,36 @@
 class Solution {
 public:
-    int sumall(vector<int>& nums){
-        int sumi=0;
-        for(int i=0;i<nums.size();i++){
-            sumi+=nums[i];
-        }
-        return sumi;
-    }
-
-    int daystak(vector<int>& nums,int mid){
-        int weight=0,cnt=1;
-
-        for(int i=0;i<nums.size();i++){
-            if(weight+nums[i]>mid){
+    int rec(int wt,vector<int>& nums){
+        int n=nums.size();
+        int ans=0;
+        int cnt=1;
+        for(int i=0;i<n;i++){
+            ans+=nums[i];
+            if(ans>wt){
+                ans=nums[i];
                 cnt++;
-                weight=nums[i];
-                //mtlb agr weight jyada h current k add hone s , toh next day m shift krdo usse, and weight m bhi value add krdena
             }
-            else{
-                weight+=nums[i];
-            }
+            // else if(ans==wt){
+            //     cnt++;
+            //     ans=0;
+            // }
         }
         return cnt;
     }
 
     int shipWithinDays(vector<int>& weights, int days) {
-        int low= *max_element(weights.begin(),weights.end()), high=sumall(weights);
-
-        while(low<=high){
-            int mid=(low+high)/2;
-
-            int a=daystak(weights,mid);
-            if(a<=days){
-                high=mid-1;
-            }
-            else{
-                low=mid+1;
-            }
+        int n=weights.size();
+        int low=*max_element(weights.begin(),weights.end());
+        int high=0;
+        for(int i=0;i<n;i++){
+            high+=weights[i];
         }
-    return low;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+
+            if(rec(mid,weights)<=days)high=mid-1;
+            else low=mid+1;
+        }
+        return low;
     }
 };
