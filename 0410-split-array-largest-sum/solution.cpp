@@ -1,44 +1,33 @@
 class Solution {
 public:
-
-    int sumarr(vector<int>& nums){
-        int sumi=0;
-        for(int i=0;i<nums.size();i++){
-            sumi+=nums[i];
-        }
-        return sumi;
-    }
-
-    int subarr_no(vector<int>& nums,int val){
-        int cnt=1, sumi=0;
-        for(int i=0;i<nums.size();i++){
-            if(sumi+nums[i]<=val){
-                sumi+=nums[i];
-            }
-            else{
+    long long rec(long long lim,vector<int>& nums){
+        int n=nums.size();
+        int cnt=1;
+        int dis=nums[0];
+        for(int i=1;i<n;i++){
+            if(nums[i]+dis>lim){
                 cnt++;
-                sumi=nums[i];
+                dis=nums[i];
             }
+            else dis+=nums[i];
         }
         return cnt;
     }
-
     int splitArray(vector<int>& nums, int k) {
-       int low=*max_element(nums.begin(),nums.end());
-       int high=sumarr(nums);
-
-       while(low<=high){
-        int mid=(low+high)/2;
-
-        int cnt=subarr_no(nums,mid);
-
-        if(cnt<=k){
-            high=mid-1;
+        int n=nums.size();
+        long long low=*max_element(nums.begin(),nums.end());  
+        long long high=0;
+        for(int i=0;i<n;i++){
+            high+=nums[i];
         }
-        else{
-            low=mid+1;
+
+        while(low<=high){
+            long long mid=low+(high-low)/2;
+            if(rec(mid,nums)<=k){
+                high=mid-1;
+            }
+            else low=mid+1;
         }
-       }
-    return low; 
+        return low;
     }
 };
