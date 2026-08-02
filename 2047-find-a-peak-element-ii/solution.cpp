@@ -1,50 +1,35 @@
 class Solution {
 public:
-
-    int maxelementincol(vector<vector<int>>& mat,int mid,int m){
-        int maxi=INT_MIN;
-        int cnt=0;
-        for(int i=0;i<m;i++){
+    int rex(vector<vector<int>>& mat,int mid){
+        int n=mat.size();
+        int maxi=mat[0][mid];
+        int ind=0;
+        for(int i=1;i<n;i++){
             if(mat[i][mid]>maxi){
-                cnt=i;
                 maxi=mat[i][mid];
+                ind=i;
             }
-        }
-
-        return cnt;
+        }        
+        return ind;
     }
-
     vector<int> findPeakGrid(vector<vector<int>>& mat) {
-        int m=mat.size();
-        int n=mat[0].size();
+        int n=mat.size();
+        int m=mat[0].size();
 
-        int low=0,high=n-1;
-        vector<int> ans;
-
+        int low=0;
+        int high=m-1;
 
         while(low<=high){
-            int mid=(low+high)/2;
-            int row=maxelementincol(mat,mid,m);
-
-            int left=-1, right=-1;
+            int mid=low+(high-low)/2;
+            int row=rex(mat,mid);
             
-            if(mid-1>=0) {left=mat[row][mid-1];}
+            int left = mid-1>=0 ? mat[row][mid-1] : -1;
+            int right =mid+1<m ? mat[row][mid+1]: -1;
 
-            if(mid+1<n) {right=mat[row][mid+1];}
-            
-            if(mat[row][mid]>left && mat[row][mid]>right){
-                ans.push_back(row);
-                ans.push_back(mid);
-                return ans;
-            }
-
-            if(mat[row][mid]<left){
-                high=mid-1;//toh peak element left side hoga
-            }
-            else{
-                low=mid+1;
-            }
+            if(mat[row][mid]> left && mat[row][mid]>right)return{row,mid};
+            else if(mat[row][mid]<left)high=mid-1;
+            else low=mid+1;
         }
-        return ans;
+        return {-1,-1};
     }
 };
