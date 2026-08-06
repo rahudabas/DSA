@@ -11,21 +11,17 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        
-        if(head==NULL || head->next==NULL)return head;
-
-        ListNode* even=head->next;
+        if(head==nullptr || head->next==nullptr)return head;
         ListNode* odd=head;
-        ListNode* evenHead=head->next;
-    
-        while(even!=NULL && even->next!=NULL){
+        ListNode* even=head->next;
+        ListNode* evenh=head->next;
+        while(even!=NULL && even->next!=NULL){ // kyuki even aage, and pehle even khatam hoga
             odd->next=odd->next->next;
             even->next=even->next->next;
-
             odd=odd->next;
             even=even->next;
         }
-        odd->next=evenHead;
+        odd->next=evenh;
         return head;
     }
 };
