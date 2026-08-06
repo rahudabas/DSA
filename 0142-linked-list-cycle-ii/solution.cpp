@@ -14,15 +14,14 @@ public:
 
         while(fast!=NULL && fast->next!=NULL){
             slow=slow->next;
-            fast=fast->next->next; 
-
-            if(slow==fast){ // mtlb first collision
+            fast=fast->next->next;
+            if(slow==fast){
                 slow=head;
                 while(slow!=fast){
                     slow=slow->next;
                     fast=fast->next;
                 }
-            return slow;
+                return slow;
             }
         }
         return nullptr;
