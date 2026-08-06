@@ -10,56 +10,30 @@
  */
 class Solution {
 public:
-
-    // ListNode* reverse(ListNode* head){
-    //     if(head==NULL || head->next==NULL){
-    //         return head;
-    //     }
-    //     ListNode* newHead=reverse(head->next);
-    //     ListNode* front=head->next;
-    //     front->next=head;
-    //     head->next=NULL;
-    //     return newHead;
-    // }//recursive m reverse
-
     ListNode* reverse(ListNode* head){
-        ListNode* temp=head;
         ListNode* prev=NULL;
-        ListNode* front=head;
-        while(temp!=NULL){
-            front=temp->next;
-            temp->next=prev;//reverse krdiya link
-            prev=temp;
-            temp=front;
+        while(head!=NULL){
+            ListNode* front=head->next;
+            head->next=prev;
+            prev=head;
+            head=front;
         }
         return prev;
     }
-
     bool isPalindrome(ListNode* head) {
         ListNode* slow=head;
         ListNode* fast=head;
-        if(head==NULL || head->next==NULL){
-            return true;
-        }
-        while(fast->next!=NULL && fast->next->next!=NULL){
-            slow=slow->next;
+        while(fast!=NULL && fast->next!=NULL){
             fast=fast->next->next;
-        }//slow is mid element
-
-        ListNode* newHead= reverse(slow->next);
-
-        ListNode* first=head;
-        ListNode* second=newHead;
-
-        while(second!=NULL){
-            if(second->val!=first->val){
-                reverse(newHead);
-                return false;
-            }
-            second=second->next;
-            first=first->next;
+            slow=slow->next;
         }
-        reverse(newHead);
+        ListNode* srt=reverse(slow);
+        fast=head;
+        while(srt!=NULL){
+            if(srt->val!=fast->val)return false;
+            srt=srt->next;
+            fast=fast->next;
+        }
         return true;
 
     }
