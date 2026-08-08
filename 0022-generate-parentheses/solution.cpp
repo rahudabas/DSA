@@ -1,30 +1,29 @@
 class Solution {
 public:
-    void generate(string s,vector<string>& valid,int open, int close){
-        if(open==0 && close==0){
-            valid.push_back(s);
+    void rec(vector<string>& ans,string res,int n1,int n2,int n){
+        if(n1==n){
+            if(n2==n){
+                ans.push_back(res);
+                return;
+            }
+            else rec(ans,res+')',n1,n2+1,n);
+        }
+        else{
+            if(n2>n1){
+                return;
+            }
+            else if(n1>n2){
+                rec(ans,res+'(',n1+1,n2,n);
+                rec(ans,res+')',n1,n2+1,n);
+            }
+            else rec(ans,res+'(',n1+1,n2,n);
             return;
         }
-
-        if(open>0){
-            s.push_back('(');
-            generate(s,valid,open-1,close);
-            s.pop_back();
-        }
-        if(close>0){
-            if(open<close){
-                s.push_back(')');
-                generate(s,valid,open,close-1);
-                s.pop_back();
-            }
-        }
     }
-
     vector<string> generateParenthesis(int n) {
-        vector<string> valid;
-        int open=n,close=n;
-        string s="";
-        generate(s,valid,open,close);
-        return valid;
+        string res;
+        vector<string> ans;
+        rec(ans,res,0,0,n);
+        return ans;
     }
 };
