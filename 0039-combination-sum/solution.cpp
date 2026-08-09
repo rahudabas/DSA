@@ -1,27 +1,22 @@
 class Solution {
 public:
-    void combi(vector<int>& arr,int index, int target, vector<int>& nums,vector<vector<int>>& ans){
-        if(index==arr.size()){
-            if(target==0){
-                ans.push_back(nums);
-            }
+    void rec(vector<vector<int>>& ans,vector<int> res,vector<int>& nums,int sum,int i,int target){
+        int n=nums.size();
+        if(sum==target){
+            ans.push_back(res);
             return;
         }
-
-        if(arr[index]<=target){
-            nums.push_back(arr[index]);
-            combi(arr,index,target-arr[index],nums,ans);
-            nums.pop_back();
-        }
-
-        combi(arr,index+1,target,nums,ans);
+        if(i==n || sum>target)return;
+        res.push_back(nums[i]);
+        rec(ans,res,nums,sum+nums[i],i,target);
+        res.pop_back();
+        rec(ans,res,nums,sum,i+1,target);
     }
 
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> nums;
         vector<vector<int>> ans;
-        int index=0;
-        combi(candidates,index,target,nums,ans);
+        vector<int> res;
+        rec(ans,res,candidates,0,0,target);      
         return ans;
     }
 };
