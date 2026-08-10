@@ -1,13 +1,21 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        vector<int> lastseen(3,-1);
+        int a=-1,b=-1,c=-1;
+        int l=0,r=0;
+        int n=s.length();
         int cnt=0;
-        for(int i=0;i<s.size();i++){
-            lastseen[s[i]-'a']=i; // jaha a,b,c last dikhe h waha daal rhe h
-            if(lastseen[0]!=-1 && lastseen[1]!=-1 && lastseen[2]!=-1){
-                cnt=cnt+ min(lastseen[0],min(lastseen[1],lastseen[2]))+1;
+        while(r<n){
+            if(s[r]=='a'){
+                a=r;
             }
+            else if(s[r]=='b')b=r;
+            else c=r;
+            if(a!=-1 && b!=-1 && c!=-1){
+                // cnt+=(n-max(a,max(b,c)));
+                cnt+=1+(min(a,min(b,c)));
+            }
+            r++;
         }
         return cnt;
     }
