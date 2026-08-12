@@ -11,26 +11,20 @@
  */
 class Solution {
 public:
-    int inord(TreeNode* root,int&check,int cnt){
+    int rec(TreeNode* root,int cnt,int& check){
         if(root==NULL){
             return cnt;
         }
-        int l=inord(root->left,check,cnt+1);
-        int r=inord(root->right,check,cnt+1);
+        int l=rec(root->left,cnt+1,check);
+        int r=rec(root->right,cnt+1,check);
 
-        if((l-r==0 ||l-r== 1||l-r==-1) && check!=-1){
-            return max(l,r);
-        }
-        else{
-            return check=-1;
-        }
+        if((l==r || l-r==1 || l-r==-1) && check!=-1)return max(l,r);
+        else return check=-1;
     }
-
     bool isBalanced(TreeNode* root) {
-        if(root==NULL)return true;
-        int cnt=0;
         int check=0;
-        if(inord(root,check,cnt)==-1)return false;
+        int ans=rec(root,0,check);
+        if(check==-1)return false;
         return true;
     }
 };
