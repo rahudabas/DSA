@@ -11,18 +11,17 @@
  */
 class Solution {
 public:
-    void inord(TreeNode* root,int& maxcnt,int cnt){
+    void rec(TreeNode* root,int cnt,int& maxi){
         if(root==NULL){
-            maxcnt=max(maxcnt,cnt);
+            maxi=max(cnt,maxi);    
             return;
         }
-        inord(root->left,maxcnt,cnt+1);
-        inord(root->right,maxcnt,cnt+1);
+        rec(root->left,cnt+1,maxi);
+        rec(root->right,cnt+1,maxi);
     }
     int maxDepth(TreeNode* root) {
-        int maxcnt=0;
-        int cnt=0;
-        inord(root,maxcnt,cnt);
-        return maxcnt;
+        int maxi=0;
+        rec(root,0,maxi);
+        return maxi;
     }
 };
